@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Culture extends Model
 {
@@ -11,4 +12,9 @@ class Culture extends Model
     use HasFactory;
     
     protected $fillable = ['id', 'name'];
+
+    public function insects(): BelongsToMany
+    {
+        return $this->belongsToMany(Insect::class, 'insect_culture');
+    }
 }
