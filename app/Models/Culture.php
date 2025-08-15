@@ -9,4 +9,6 @@ class Culture extends Model
 {
     /** @use HasFactory<\Database\Factories\CultureFactory> */
     use HasFactory;
+    
+    protected $fillable = ['id', 'name'];
 }

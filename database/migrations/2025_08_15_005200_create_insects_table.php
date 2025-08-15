@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('insects', function (Blueprint $table) {
             $table->id();
+            $table->string('scientific_name')->nullable();
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('family_id')->constrained('families')->onDelete('cascade');
+            $table->boolean('predator')->default(false);
+            $table->text('importance')->nullable();
+            $table->text('morphology')->nullable();
             $table->timestamps();
         });
     }

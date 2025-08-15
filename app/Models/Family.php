@@ -9,4 +9,6 @@ class Family extends Model
 {
     /** @use HasFactory<\Database\Factories\FamilyFactory> */
     use HasFactory;
+
+    protected $fillable = ['id', 'name', 'order_id'];
 }

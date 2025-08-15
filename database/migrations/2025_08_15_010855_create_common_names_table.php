@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('common_names', function (Blueprint $table) {
+        Schema::create('common_names', function (Blueprint $table): void {
             $table->id();
+            $table->foreignId('insect_id')->constrained('insects')->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
         });
     }

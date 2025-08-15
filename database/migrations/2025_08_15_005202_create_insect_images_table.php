@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('insect_images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('insect_id')->constrained('insects')->onDelete('cascade');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
