@@ -6,6 +6,7 @@ use App\Models\Insect;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
+use App\Models\Order;
 
 class InsectController extends Controller
 {
@@ -14,7 +15,19 @@ class InsectController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::with([
+            'families' => function ($query) {
+                $query->orderBy('nome_familia', 'asc')
+                    ->with(['insects' => function ($q) {
+                        $q->orderBy('nome_cientifico', 'asc');
+                    }]);
+            }
+        ])
+            ->orderBy('nome_ordem', 'asc')
+            ->get();
+
+        dd($orders);
+        return view('insects.index', compact('orders'));
     }
 
     /**
