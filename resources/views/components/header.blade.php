@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 w-full h-16 shadow-md z-30 bg-white" x-data="{ open: false }">
+<header class="fixed top-0 left-0 w-full h-16 shadow-md z-30 bg-white" x-data="{ open: false } bg-[#21361b]">
     <div class="flex items-center justify-between h-full px-10 max-sm:p-4">
 
         <a href="#">

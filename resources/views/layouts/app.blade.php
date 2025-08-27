@@ -9,11 +9,11 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="bg-black/[.25]">
     @php
     $links = [
     ['name' => 'Home', 'link' => '/'],
-    ['name' => 'Insetário', 'link' => '/insectary'],
+    ['name' => 'Insetário', 'link' => '/insetario'],
     ];
     @endphp
 
@@ -26,7 +26,7 @@
     @php
     $links = [
     ['name' => 'Home', 'link' => '/'],
-    ['name' => 'Insetário', 'link' => '/insectary']
+    ['name' => 'Insetário', 'link' => '/insetario']
     ];
     @endphp
 

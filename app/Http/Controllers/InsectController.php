@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
 use App\Models\Order;
+use Illuminate\Support\Facades\Request;
 
 class InsectController extends Controller
 {
@@ -17,17 +18,18 @@ class InsectController extends Controller
     {
         $orders = Order::with([
             'families' => function ($query) {
-                $query->orderBy('nome_familia', 'asc')
-                    ->with(['insects' => function ($q) {
-                        $q->orderBy('nome_cientifico', 'asc');
-                    }]);
+                $query->orderBy('name', 'asc')
+                    ->with([
+                        'insects' => function ($q) {
+                            $q->orderBy('scientific_name', 'asc');
+                        }
+                    ]);
             }
         ])
-            ->orderBy('nome_ordem', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
 
-        dd($orders);
-        return view('insects.index', compact('orders'));
+        return view('insectary.index', compact('orders'));
     }
 
     /**
@@ -49,9 +51,12 @@ class InsectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Insect $insect)
+    public function show(int $id)
     {
-        //
+        $insect = Insect::with(['family', 'order', 'common_names', 'cultures', 'images'])
+            ->findOrFail($id);
+
+        return view('insectary.detail', compact('insect'));
     }
 
     /**
