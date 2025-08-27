@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-
+// Login e Logout do Admin
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 // Área Admin
 Route::middleware(['auth', 'admin'])
@@ -24,7 +24,8 @@ Route::middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('dashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
 
-        Route::resource('insectary', InsectController::class)->except(['index']);
+        Route::resource('insectary', InsectController::class)->except(['show']);
+
         Route::resource('orders', OrderController::class);
         Route::resource('families', FamilyController::class);
         Route::resource('cultures', CultureController::class);
@@ -33,5 +34,5 @@ Route::middleware(['auth', 'admin'])
     });
 
 // Rotas públicas do insetário
-Route::get('/insetario', [InsectController::class, 'index'])->name('insectary.index');
-Route::get('/insetario/{id}', [InsectController::class, 'show'])->name('insectary.show');
+Route::get('/insetario', [InsectController::class, 'index'])->name('insectary.public.index');
+Route::get('/insetario/{id}', [InsectController::class, 'show'])->name('insectary.public.show');
