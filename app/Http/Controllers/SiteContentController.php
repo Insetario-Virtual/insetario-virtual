@@ -13,7 +13,8 @@ class SiteContentController extends Controller
      */
     public function index()
     {
-        //
+        $siteContents = SiteContent::all();
+        return view('admin.site-data.index', compact('siteContents'));
     }
 
     /**

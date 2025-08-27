@@ -14,7 +14,8 @@ class FamilyController extends Controller
      */
     public function index()
     {
-        //
+        $families = Family::with('order')->get();
+        return view('admin.families.index', compact('families'));
     }
 
     /**

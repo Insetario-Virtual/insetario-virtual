@@ -14,7 +14,8 @@ class CultureController extends Controller
      */
     public function index()
     {
-        //
+        $cultures = Culture::all();
+        return view('admin.cultures.index', compact('cultures'));
     }
 
     /**
