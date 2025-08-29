@@ -11,7 +11,6 @@
     <table class="min-w-full bg-white rounded-lg shadow">
         <thead class="bg-gray-200">
             <tr>
-                <th class="py-2 px-4 text-left">ID</th>
                 <th class="py-2 px-4 text-left">Nome</th>
                 <th class="py-2 px-4 text-left">Função</th>
                 <th class="py-2 px-4 text-left">Ativo</th>
@@ -21,7 +20,6 @@
         <tbody>
             @foreach($members as $member)
             <tr class="border-b">
-                <td class="py-2 px-4">{{ $member->id }}</td>
                 <td class="py-2 px-4">{{ $member->name }}</td>
                 <td class="py-2 px-4">{{ $member->role }}</td>
                 <td class="py-2 px-4">{{ $member->active ? 'Sim' : 'Não' }}</td>

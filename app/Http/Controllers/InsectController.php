@@ -53,9 +53,9 @@ class InsectController extends Controller
      */
     public function show(int $id)
     {
-        $insect = Insect::with(['family', 'order', 'common_names', 'cultures', 'images'])
+        $insect = Insect::with(['family', 'order', 'commonNames', 'cultures', 'images'])
             ->findOrFail($id);
-
+            
         return view('insectary.detail', compact('insect'));
     }
 

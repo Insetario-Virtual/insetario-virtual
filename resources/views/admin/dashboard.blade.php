@@ -11,7 +11,7 @@
             <h3 class="text-lg font-bold mb-2">Gerenciar Insetos</h3>
             <p class="text-gray-600">Adicionar, editar ou remover insetos e seus dados.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 
     {{-- CRUD de Ordens --}}
@@ -20,7 +20,7 @@
             <h3 class="text-lg font-bold mb-2">Gerenciar Ordens</h3>
             <p class="text-gray-600">Editar ordens de insetos e dados relacionados.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 
     {{-- CRUD de Famílias --}}
@@ -29,7 +29,7 @@
             <h3 class="text-lg font-bold mb-2">Gerenciar Famílias</h3>
             <p class="text-gray-600">Editar famílias vinculadas às ordens.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 
     {{-- CRUD de Culturas --}}
@@ -38,7 +38,7 @@
             <h3 class="text-lg font-bold mb-2">Gerenciar Culturas</h3>
             <p class="text-gray-600">Gerenciar culturas afetadas pelos insetos.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 
     {{-- CRUD de Equipe --}}
@@ -47,7 +47,7 @@
             <h3 class="text-lg font-bold mb-2">Gerenciar Equipe</h3>
             <p class="text-gray-600">Gerenciar membros da equipe de admins ou editores.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 
     {{-- CRUD de Dados do Site --}}
@@ -56,7 +56,7 @@
             <h3 class="text-lg font-bold mb-2">Configurações do Site</h3>
             <p class="text-gray-600">Editar informações e conteúdos do site.</p>
         </div>
-        <div class="mt-4 text-blue-600 font-semibold">Ir &rarr;</div>
+        <div class="mt-4 text-[#445a1b] font-semibold">Ir &rarr;</div>
     </a>
 </div>
 @endsection

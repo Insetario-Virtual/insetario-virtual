@@ -3,7 +3,7 @@
 
         <a href="#">
             <div class="flex items-center gap-2 font-bold text-xl md:text-2xl cursor-pointer">
-                <img src="{{ asset('insetario.png') }}" alt="Logo do Insetário Virtual" class="h-11 sm:h-12 rounded-full" />
+                <img src="{{ asset('storage/icons/insetario.png') }}" alt="Logo do Insetário Virtual" class="h-11 sm:h-12 rounded-full">
                 <span>Insetário Virtual</span>
             </div>
         </a>
@@ -13,17 +13,17 @@
             <nav :class="`absolute sm:static top-14 sm:top-0 right-0 w-fit sm:w-auto sm:flex items-center bg-white sm:bg-transparent transition-all duration-500 ease-in-out overflow-hidden ${open ? 'max-h-[300px] opacity-100 shadow-lg' : 'max-h-0 opacity-0'} sm:max-h-none sm:opacity-100`">
                 <ul class="flex flex-col gap-10 p-4 sm:flex-row sm:items-center w-fit sm:w-auto">
                     @foreach ($links as $link)
-                        <li class="font-semibold text-lg">
-                            <a href="{{ $link['link'] }}" class="text-gray-800 hover:text-[#688A41] transition duration-150" @click="open = false">
-                                {{ $link['name'] }}
-                            </a>
-                        </li>
+                    <li class="font-semibold text-lg">
+                        <a href="{{ $link['link'] }}" class="text-gray-800 hover:text-[#688A41] transition duration-150" @click="open = false">
+                            {{ $link['name'] }}
+                        </a>
+                    </li>
                     @endforeach
                 </ul>
             </nav>
 
             <div class="hidden sm:flex items-center gap-4">
-                <img src="{{ asset('icons/if.png') }}" alt="Logo do IFRS" class="h-11 transition duration-500" :class="{ 'hidden': open, 'block': !open }" />
+                <img src="{{ asset('storage/icons/if.png') }}" alt="Logo do IFRS" class="h-11 transition duration-500" :class="{ 'hidden': open, 'block': !open }" />
             </div>
         </div>
 

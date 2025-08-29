@@ -3,9 +3,9 @@
         <div class="flex flex-col md:flex-row md:justify-between gap-x-15 gap-y-8">
             <div class="flex flex-col md:w-2/5">
                 <div class="flex items-center gap-4 mb-4">
-                    <img src="{{ asset('assets/icons/insetario.png') }}" class="h-10 rounded-full" alt="Logo do Insetário Virtual" />
+                    <img src="{{ asset('storage/icons/insetario.png') }}" class="h-10 rounded-full" alt="Logo do Insetário Virtual" />
                     <span class="text-lg font-sans font-bold">Insetário Virtual</span>
-                    <img src="{{ asset('assets/icons/if.png') }}" class="h-8" alt="Logo do IFRS" />
+                    <img src="{{ asset('storage/icons/if.png') }}" class="h-8" alt="Logo do IFRS" />
                 </div>
                 <p class="text-sm text-gray-600">
                     Projeto de extensão do IFRS-Campus Bento Gonçalves de um insetário virtual com intuito de

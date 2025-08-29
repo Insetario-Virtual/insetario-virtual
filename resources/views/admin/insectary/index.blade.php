@@ -11,7 +11,6 @@
     <table class="min-w-full bg-white rounded-lg shadow">
         <thead class="bg-gray-200">
             <tr>
-                <th class="py-2 px-4 text-left">ID</th>
                 <th class="py-2 px-4 text-left">Nome Científico</th>
                 <th class="py-2 px-4 text-left">Ordem</th>
                 <th class="py-2 px-4 text-left">Família</th>
@@ -25,7 +24,6 @@
         <tbody>
             @foreach($insects as $insect)
             <tr class="border-b">
-                <td class="py-2 px-4">{{ $insect->id }}</td>
                 <td class="py-2 px-4">{{ $insect->scientific_name }}</td>
                 <td class="py-2 px-4">{{ $insect->order->name ?? 'N/A' }}</td>
                 <td class="py-2 px-4">{{ $insect->family->name ?? 'N/A' }}</td>

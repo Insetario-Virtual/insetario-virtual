@@ -11,7 +11,6 @@
     <table class="min-w-full bg-white rounded-lg shadow">
         <thead class="bg-gray-200">
             <tr>
-                <th class="py-2 px-4 text-left">ID</th>
                 <th class="py-2 px-4 text-left">Nome</th>
                 <th class="py-2 px-4 text-center">Ações</th>
             </tr>
@@ -19,7 +18,6 @@
         <tbody>
             @foreach($orders as $order)
             <tr class="border-b">
-                <td class="py-2 px-4">{{ $order->id }}</td>
                 <td class="py-2 px-4">{{ $order->name }}</td>
                 <td class="py-2 px-4 text-center space-x-2">
                     <a href="{{ route('admin.orders.edit', $order->id) }}"
