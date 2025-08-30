@@ -4,8 +4,13 @@
 
 @section('content')
 <div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-xl font-semibold text-[#22371c] mb-4">Adicionar Membro</h2>
-
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-[#22371c] mb-4">Adicionar Membro</h2>
+        <a href="{{ route('admin.members.index') }}"
+            class="px-4 py-2 rounded-xl text-white bg-[#445a1b] hover:opacity-90">
+            Voltar
+        </a>
+    </div>
     <form action="{{ route('admin.members.store') }}" method="POST" class="space-y-4">
         @csrf
         <div>

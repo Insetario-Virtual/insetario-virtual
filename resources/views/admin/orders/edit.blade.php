@@ -2,8 +2,13 @@
 
 @section('content')
 <div class="bg-white p-6 rounded-2xl shadow-md">
-    <h2 class="text-2xl font-bold mb-4 text-[#22371c]">Editar Ordem</h2>
-
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold mb-4 text-[#22371c]">Editar Ordem</h2>
+        <a href="{{ route('admin.orders.index') }}"
+            class="px-4 py-2 rounded-xl text-white bg-[#445a1b] hover:opacity-90">
+            Voltar
+        </a>
+    </div>
     <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="space-y-4">
         @csrf
         @method('PUT')

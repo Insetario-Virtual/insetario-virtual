@@ -6,7 +6,9 @@ use App\Models\Insect;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
+use App\Models\Family;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 
 class InsectController extends Controller
@@ -46,7 +48,11 @@ class InsectController extends Controller
      */
     public function create()
     {
-        //
+        $orders = Order::with('families')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.insectary.create', compact('orders'));
     }
 
     /**
@@ -54,8 +60,38 @@ class InsectController extends Controller
      */
     public function store(StoreInsectRequest $request)
     {
-        //
+        DB::transaction(function () use ($request) {
+            // Create the insect
+            $insect = Insect::create($request->validated());
+
+            // Store common names
+            if ($request->has('common_names')) {
+                $insect->commonNames()->createMany(
+                    collect($request->input('common_names'))
+                        ->filter(fn($name) => !empty($name))
+                        ->map(fn($name) => ['name' => $name])
+                        ->toArray()
+                );
+            }
+
+            // Store cultures
+            if ($request->has('cultures')) {
+                $insect->cultures()->sync($request->input('cultures'));
+            }
+
+            // Store images
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('insects', 'public');
+                    $insect->images()->create(['path' => $path]);
+                }
+            }
+        });
+
+        return redirect()->route('admin.insects.index')
+            ->with('success', 'Insect created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -73,7 +109,7 @@ class InsectController extends Controller
      */
     public function edit(Insect $insect)
     {
-        //
+        return view('admin.families.edit');
     }
 
     /**
@@ -81,14 +117,46 @@ class InsectController extends Controller
      */
     public function update(UpdateInsectRequest $request, Insect $insect)
     {
-        //
+        DB::transaction(function () use ($request, $insect) {
+            // Update insect main data
+            $insect->update($request->validated());
+
+            // Update common names
+            $insect->commonNames()->delete();
+            if ($request->has('common_names')) {
+                $insect->commonNames()->createMany(
+                    collect($request->input('common_names'))
+                        ->filter(fn($name) => !empty($name))
+                        ->map(fn($name) => ['name' => $name])
+                        ->toArray()
+                );
+            }
+
+            // Update cultures
+            $insect->cultures()->sync($request->input('cultures', []));
+
+            // Add new images
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('insects', 'public');
+                    $insect->images()->create(['path' => $path]);
+                }
+            }
+        });
+
+        return redirect()->route('admin.insects.index')
+            ->with('success', 'Insect updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Insect $insect)
+    public function destroy(int $id)
     {
-        //
+        $insect = Insect::findOrFail($id);
+
+        $insect->delete();
+
+        return redirect()->route('admin.insectary.index');
     }
 }

@@ -46,11 +46,11 @@
                             <td class="px-4 py-2">{{ $insect->predator ? 'Sim' : 'Não' }}</td>
                             <td class="px-4 py-2">{{ $insect->importance }}</td>
                             <td class="px-4 py-2 space-x-2 flex">
-                                <a href="{{ route('admin.insectary.edit', $insect->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">Edit</a>
+                                <a href="{{ route('admin.insectary.edit', $insect->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded">Editar</a>
                                 <form action="{{ route('admin.insectary.destroy', $insect->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Delete</button>
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">Excluir</button>
                                 </form>
                             </td>
                         </tr>

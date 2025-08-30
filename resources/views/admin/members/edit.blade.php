@@ -4,32 +4,35 @@
 
 @section('content')
 <div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-xl font-semibold text-[#22371c] mb-4">Editar Membro</h2>
-
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-[#22371c] mb-4">Editar Membro</h2>
+        <a href="{{ route('admin.members.index') }}"
+            class="px-4 py-2 rounded-xl text-white bg-[#445a1b] hover:opacity-90">
+            Voltar
+        </a>
+    </div>
     <form action="{{ route('admin.members.update', $member->id) }}" method="POST" class="space-y-4">
         @csrf
         @method('PUT')
 
         <div>
             <label class="block text-sm font-medium">Nome:</label>
-            <input 
-                type="text" 
-                name="name" 
-                value="{{ old('name', $member->name) }}" 
-                class="w-full border p-2 rounded-md" 
-                required
-            >
+            <input
+                type="text"
+                name="name"
+                value="{{ old('name', $member->name) }}"
+                class="w-full border p-2 rounded-md"
+                required>
         </div>
 
         <div>
             <label class="block text-sm font-medium">Área:</label>
-            <input 
-                type="text" 
-                name="role" 
-                value="{{ old('role', $member->role) }}" 
-                class="w-full border p-2 rounded-md" 
-                required
-            >
+            <input
+                type="text"
+                name="role"
+                value="{{ old('role', $member->role) }}"
+                class="w-full border p-2 rounded-md"
+                required>
         </div>
 
         <div>
