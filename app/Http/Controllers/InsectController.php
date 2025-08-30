@@ -11,12 +11,9 @@ use Illuminate\Support\Facades\Request;
 
 class InsectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private function getOrdersData()
     {
-        $orders = Order::with([
+        return Order::with([
             'families' => function ($query) {
                 $query->orderBy('name', 'asc')
                     ->with([
@@ -28,8 +25,20 @@ class InsectController extends Controller
         ])
             ->orderBy('name', 'asc')
             ->get();
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexPublic()
+    {
+        $orders = $this->getOrdersData();
+        return view('insectary.public.index', compact('orders'));
+    }
 
-        return view('insectary.index', compact('orders'));
+    public function indexAdmin()
+    {
+        $orders = $this->getOrdersData();
+        return view('admin.insectary.index', compact('orders'));
     }
 
     /**
@@ -55,7 +64,7 @@ class InsectController extends Controller
     {
         $insect = Insect::with(['family', 'order', 'commonNames', 'cultures', 'images'])
             ->findOrFail($id);
-            
+
         return view('insectary.detail', compact('insect'));
     }
 

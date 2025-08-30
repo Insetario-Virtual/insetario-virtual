@@ -23,7 +23,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.members.create');
     }
 
     /**
@@ -31,7 +31,11 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
-        //
+        $request->validated();
+
+        Member::create($request->all());
+
+        return redirect()->route('admin.members.index')->with('success', 'Member created successfully.');
     }
 
     /**
@@ -45,9 +49,11 @@ class MemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Member $member)
+    public function edit(int $id)
     {
-        //
+        $member = Member::findOrFail($id);
+
+        return view('admin.members.edit', compact('member'));
     }
 
     /**

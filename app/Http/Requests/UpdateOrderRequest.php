@@ -22,7 +22,7 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255|unique:orders,name,' . $this->route('order')->id,
         ];
     }
 }

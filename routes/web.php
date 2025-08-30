@@ -10,21 +10,28 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SiteContentController;
 use Illuminate\Support\Facades\Route;
 
+// Página inicial
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 // Login e Logout do Admin
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-// Área Admin
+// Área Admin (apenas para usuários autenticados e admins)
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         Route::get('dashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
 
-        Route::resource('insectary', InsectController::class)->except(['show']);
+        // Insetos (CRUD) para admin
+        Route::get('insectary', [InsectController::class, 'indexAdmin'])->name('insectary.index');
+        Route::get('insectary/create', [InsectController::class, 'create'])->name('insectary.create');
+        Route::post('insectary', [InsectController::class, 'store'])->name('insectary.store');
+        Route::get('insectary/{insect}/edit', [InsectController::class, 'edit'])->name('insectary.edit');
+        Route::put('insectary/{insect}', [InsectController::class, 'update'])->name('insectary.update');
+        Route::delete('insectary/{insect}', [InsectController::class, 'destroy'])->name('insectary.destroy');
 
         Route::resource('orders', OrderController::class);
         Route::resource('families', FamilyController::class);
@@ -33,6 +40,8 @@ Route::middleware(['auth', 'admin'])
         Route::resource('site-data', SiteContentController::class);
     });
 
-// Rotas públicas do insetário
-Route::get('/insetario', [InsectController::class, 'index'])->name('insectary.public.index');
-Route::get('/insetario/{id}', [InsectController::class, 'show'])->name('insectary.public.show');
+// Rotas públicas do Insetário
+Route::prefix('insetario')->name('insectary.public.')->group(function () {
+    Route::get('/', [InsectController::class, 'indexPublic'])->name('index');
+    Route::get('/{id}', [InsectController::class, 'show'])->name('show');
+});

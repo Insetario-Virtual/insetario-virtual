@@ -23,7 +23,7 @@ class CultureController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cultures.create');
     }
 
     /**
@@ -31,7 +31,11 @@ class CultureController extends Controller
      */
     public function store(StoreCultureRequest $request)
     {
-        //
+        $request->validated();
+
+        Culture::create($request->all());
+
+        return redirect()->route('admin.cultures.index')->with('success', 'Culture created successfully.');
     }
 
     /**
@@ -47,7 +51,7 @@ class CultureController extends Controller
      */
     public function edit(Culture $culture)
     {
-        //
+        return view('admin.cultures.edit', compact('culture'));
     }
 
     /**
@@ -55,7 +59,11 @@ class CultureController extends Controller
      */
     public function update(UpdateCultureRequest $request, Culture $culture)
     {
-        //
+        $request->validated();
+
+        $culture->update($request->all());
+
+        return redirect()->route('admin.cultures.index')->with('success', 'Culture updated successfully.');
     }
 
     /**
@@ -63,6 +71,8 @@ class CultureController extends Controller
      */
     public function destroy(Culture $culture)
     {
-        //
+        $culture->delete();
+
+        return redirect()->route('admin.cultures.index')->with('success', 'Culture deleted successfully.');
     }
 }

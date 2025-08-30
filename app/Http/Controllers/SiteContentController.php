@@ -22,7 +22,7 @@ class SiteContentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.site-data.create');
     }
 
     /**
@@ -30,7 +30,14 @@ class SiteContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'description' => 'string',
+        ]);
+
+        SiteContent::create($request->only('title', 'description'));
+
+        return redirect()->route('admin.site-data.index');
     }
 
     /**
@@ -44,24 +51,35 @@ class SiteContentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SiteContent $siteContent)
+    public function edit(int $id)
     {
-        //
+        $siteData = SiteContent::findOrFail($id);
+        
+        return view('admin.site-data.edit', compact('siteData'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SiteContent $siteContent)
+    public function update(Request $request, SiteContent $siteData)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'description' => 'string',
+        ]);
+
+        $siteData->update($request->only('title', 'description'));
+
+        return redirect()->route('admin.site-data.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SiteContent $siteContent)
+    public function destroy(SiteContent $siteData)
     {
-        //
+        $siteData->delete();
+
+        return redirect()->route('admin.site-data.index');
     }
 }

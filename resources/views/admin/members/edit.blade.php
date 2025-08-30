@@ -1,0 +1,48 @@
+@extends('layouts.admin-layout')
+
+@section('title', 'Edit Member')
+
+@section('content')
+<div class="bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-[#22371c] mb-4">Editar Membro</h2>
+
+    <form action="{{ route('admin.members.update', $member->id) }}" method="POST" class="space-y-4">
+        @csrf
+        @method('PUT')
+
+        <div>
+            <label class="block text-sm font-medium">Nome:</label>
+            <input 
+                type="text" 
+                name="name" 
+                value="{{ old('name', $member->name) }}" 
+                class="w-full border p-2 rounded-md" 
+                required
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium">Área:</label>
+            <input 
+                type="text" 
+                name="role" 
+                value="{{ old('role', $member->role) }}" 
+                class="w-full border p-2 rounded-md" 
+                required
+            >
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium">Ativo:</label>
+            <select name="active" class="w-full border p-2 rounded-md" required>
+                <option value="1" {{ old('active', $member->active) == 1 ? 'selected' : '' }}>Sim</option>
+                <option value="0" {{ old('active', $member->active) == 0 ? 'selected' : '' }}>Não</option>
+            </select>
+        </div>
+
+        <button type="submit" class="bg-[#445a1b] text-white px-4 py-2 rounded-md">
+            Atualizar
+        </button>
+    </form>
+</div>
+@endsection

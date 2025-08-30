@@ -6,6 +6,8 @@ use App\Models\Family;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFamilyRequest;
 use App\Http\Requests\UpdateFamilyRequest;
+use App\Models\Order;
+use Illuminate\Http\Request;
 
 class FamilyController extends Controller
 {
@@ -23,7 +25,9 @@ class FamilyController extends Controller
      */
     public function create()
     {
-        //
+        $orders = Order::all();
+        
+        return view('admin.families.create', compact('orders'));
     }
 
     /**
@@ -31,7 +35,12 @@ class FamilyController extends Controller
      */
     public function store(StoreFamilyRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        Family::create($data);
+
+        return redirect()
+            ->route('admin.families.index');
     }
 
     /**
@@ -47,7 +56,8 @@ class FamilyController extends Controller
      */
     public function edit(Family $family)
     {
-        //
+        $orders = Order::orderBy('name')->get(['id', 'name']);
+        return view('admin.families.edit', compact('family', 'orders'));
     }
 
     /**
@@ -55,7 +65,12 @@ class FamilyController extends Controller
      */
     public function update(UpdateFamilyRequest $request, Family $family)
     {
-        //
+        $data = $request->validated();
+
+        $family->update($data);
+
+        return redirect()
+            ->route('admin.families.index');
     }
 
     /**
@@ -63,6 +78,8 @@ class FamilyController extends Controller
      */
     public function destroy(Family $family)
     {
-        //
+        $family->delete();
+
+        return redirect()->route('admin.families.index');
     }
 }

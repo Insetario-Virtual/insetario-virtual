@@ -29,7 +29,7 @@
             </div>
 
             <button type="submit"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition-colors">
+                class="w-full bg-[#445a1b] hover:bg-[#2b3910] text-white font-semibold py-2 px-4 rounded transition-colors">
                 Entrar
             </button>
         </form>

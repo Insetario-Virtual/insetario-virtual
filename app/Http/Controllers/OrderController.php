@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.orders.create');
     }
 
     /**
@@ -31,7 +31,11 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $request->validated();
+
+        Order::create($request->all());
+
+        return redirect()->route('admin.orders.index');
     }
 
     /**
@@ -47,7 +51,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('admin.orders.edit', compact('order'));
     }
 
     /**
@@ -55,7 +59,11 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $request->validated();
+
+        $order->update($request->all());
+
+        return redirect()->route('admin.orders.index');
     }
 
     /**
@@ -63,6 +71,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return redirect()->route('admin.orders.index');
     }
 }
