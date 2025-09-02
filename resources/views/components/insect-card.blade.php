@@ -1,6 +1,6 @@
 @props(['id', 'common_name', 'scientific_name', 'image_path' => null])
 
-<a href="{{ route('insectary.public.show', ['id' => $id]) }}" 
+<a href="{{ route('insectary.show', ['id' => $id]) }}" 
    class="block rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
     <div class="h-40 bg-gray-100 overflow-hidden">
         <img src="{{ $image_path }}" alt="Imagem de {{ $common_name }}" class="w-full h-full object-cover">

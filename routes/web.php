@@ -41,7 +41,7 @@ Route::middleware(['auth', 'admin'])
     });
 
 // Rotas públicas do Insetário
-Route::prefix('insetario')->name('insectary.public.')->group(function () {
+Route::prefix('insetario')->name('insectary.')->group(function () {
     Route::get('/', [InsectController::class, 'indexPublic'])->name('index');
     Route::get('/{id}', [InsectController::class, 'show'])->name('show');
 });

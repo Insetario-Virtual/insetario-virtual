@@ -1,7 +1,7 @@
 <div class="form-container bg-black/[.25] w-full h-fit rounded px-4 py-3 mt-20 backdrop-blur-md z-10 text-white">
     <h1 class="text-xl sm:text-2xl font-semibold">Filtragem</h1>
 
-    <form method="GET" action="{{ route('insectary.public.index') }}" id="filterForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+    <form method="GET" action="{{ route('insectary.index') }}" id="filterForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         @csrf
 
         <!-- Nome Comum -->

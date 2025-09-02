@@ -32,7 +32,7 @@ class InsectController extends Controller
     public function indexPublic()
     {
         $orders = $this->getOrganizedData();
-        return view('insectary.public.index', compact('orders'));
+        return view('insectary.index', compact('orders'));
     }
 
     public function indexAdmin()

@@ -43,7 +43,7 @@ return $text;
     {{-- Cabeçalho --}}
     <div class="pt-4 flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-white max-lg:text-xl">Detalhes sobre o inseto</h1>
-        <a href="{{ route('insectary.public.index') }}">
+        <a href="{{ route('insectary.index') }}">
             <button class="p-2 bg-white/90 hover:bg-white/80 text-lg transition-all ease-in-out duration-200 max-md:text-base text-black font-semibold rounded">
                 Voltar
             </button>
