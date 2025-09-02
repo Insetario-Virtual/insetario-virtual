@@ -6,14 +6,12 @@ use App\Models\Insect;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
-use App\Models\Family;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 
 class InsectController extends Controller
 {
-    private function getOrdersData()
+    private function getOrganizedData()
     {
         return Order::with([
             'families' => function ($query) {
@@ -33,13 +31,13 @@ class InsectController extends Controller
      */
     public function indexPublic()
     {
-        $orders = $this->getOrdersData();
+        $orders = $this->getOrganizedData();
         return view('insectary.public.index', compact('orders'));
     }
 
     public function indexAdmin()
     {
-        $orders = $this->getOrdersData();
+        $orders = $this->getOrganizedData();
         return view('admin.insectary.index', compact('orders'));
     }
 
