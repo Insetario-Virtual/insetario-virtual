@@ -7,33 +7,139 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
 use App\Models\Order;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InsectController extends Controller
 {
     private function getOrganizedData()
     {
-        return Order::with([
-            'families' => function ($query) {
-                $query->orderBy('name', 'asc')
-                    ->with([
-                        'insects' => function ($q) {
-                            $q->orderBy('scientific_name', 'asc');
-                        }
-                    ]);
-            }
-        ])
-            ->orderBy('name', 'asc')
-            ->get();
+        return Order::with(['families' => function ($query) {
+            $query->orderBy('name', 'asc')->with(['insects' => function ($q) {
+                $q->orderBy('scientific_name', 'asc');
+            }]);
+        }])->orderBy('name', 'asc')->get();
     }
+    private function getOrganizedData2(array $filters = [])
+    {
+        $query = DB::table('insects')
+            ->select(
+                'insects.id',
+                'insects.scientific_name',
+                'insects.order_id',
+                'insects.family_id',
+                'insects.predator',
+                'orders.name as order_name',
+                'families.name as family_name',
+                DB::raw('GROUP_CONCAT(DISTINCT common_names.name SEPARATOR ", ") as common_names')
+            )
+            ->join('orders', 'insects.order_id', '=', 'orders.id')
+            ->join('families', 'insects.family_id', '=', 'families.id')
+            ->leftJoin('common_names', 'insects.id', '=', 'common_names.insect_id')
+            ->leftJoin('insect_culture', 'insects.id', '=', 'insect_culture.insect_id')
+            ->leftJoin('cultures', 'insect_culture.culture_id', '=', 'cultures.id')
+            ->groupBy(
+                'insects.id',
+                'insects.scientific_name',
+                'insects.order_id',
+                'insects.family_id',
+                'insects.predator',
+                'orders.name',
+                'families.name'
+            );
+
+        // Filtros
+        if (!empty($filters['scientific_name'])) {
+            $query->where('insects.scientific_name', 'like', '%' . $filters['scientific_name'] . '%');
+        }
+
+        if (!empty($filters['order'])) {
+            $query->where('orders.id', $filters['order']);
+        }
+
+        if (!empty($filters['family'])) {
+            $query->where('families.id', $filters['family']);
+        }
+
+        if (!empty($filters['predator'])) {
+            $query->where('insects.predator', $filters['predator']);
+        }
+
+        if (!empty($filters['common_name'])) {
+            $query->where('common_names.name', 'like', '%' . $filters['common_name'] . '%');
+        }
+
+        if (!empty($filters['culture'])) {
+            $query->where('cultures.id', $filters['culture']);
+        }
+
+
+
+        // $results = $query->orderBy('orders.name')
+        //     ->orderBy('families.name')
+        //     ->orderBy('insects.scientific_name')
+        //     ->get();
+
+        $results = $query->get();
+
+
+
+
+        // 🔹 Reorganizar no formato (ordens → famílias → insetos)
+        $orders = [];
+
+
+        foreach ($results as $row) {
+            $orderId = $row->order_id;
+            $familyId = $row->family_id;
+
+            if (!isset($orders[$orderId])) {
+                $orders[$orderId] = [
+                    'id' => $orderId,
+                    'name' => $row->order_name,
+                    'families' => [],
+                ];
+            }
+
+            if (!isset($orders[$orderId]['families'][$familyId])) {
+                $orders[$orderId]['families'][$familyId] = [
+                    'id' => $familyId,
+                    'name' => $row->family_name,
+                    'insects' => [],
+                ];
+            }
+
+            $orders[$orderId]['families'][$familyId]['insects'][] = [
+                'id' => $row->id,
+                'common_name' => $row->common_names,
+                'scientific_name' => $row->scientific_name,
+            ];
+        }
+
+        return $orders;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function indexPublic()
+    public function indexPublic(Request $request)
     {
-        $orders = $this->getOrganizedData();
-        return view('insectary.index', compact('orders'));
+        $filters = $request->only([
+            'common_name',
+            'scientific_name',
+            'order',
+            'family',
+            'predator',
+            'culture',
+        ]);
+
+
+        $organized = (!sizeof($filters)) ?  $this->getOrganizedData() : $this->getOrganizedData2($filters);
+
+
+        return view('insectary.index', compact('organized'));
     }
+
 
     public function indexAdmin()
     {
