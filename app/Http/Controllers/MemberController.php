@@ -33,6 +33,7 @@ class MemberController extends Controller
     {
         $request->validated();
 
+
         Member::create($request->all());
 
         return redirect()->route('admin.members.index')->with('success', 'Member created successfully.');
@@ -67,8 +68,12 @@ class MemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Member $member)
+    public function destroy(int $id)
     {
-        //
+        $member = Member::findOrFail($id);
+
+        $member->delete();
+
+        return redirect()->route('admin.site-data.index');
     }
 }

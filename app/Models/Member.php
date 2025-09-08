@@ -10,6 +10,6 @@ class Member extends Model
     /** @use HasFactory<\Database\Factories\MemberFactory> */
     use HasFactory;
 
-    protected $fillable = ['id', 'name', 'role', 'active', 'image_path'];
+    protected $fillable = ['name', 'role', 'active', 'image_path'];
 
 }
