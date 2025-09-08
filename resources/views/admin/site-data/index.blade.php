@@ -29,7 +29,7 @@
                 <td class="border px-4 py-2 flex gap-2">
                     <a href="{{ route('admin.site-data.edit', $data) }}"
                         class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</a>
-                    <form action="{{ route('admin.site-data.destroy', $data) }}" method="POST" class="inline">
+                    <form action="{{ route('admin.site-data.destroy', $data->id) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
                         <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"

@@ -12,11 +12,24 @@ return $index === 0 ? ucfirst($name) : strtolower($name);
 
 function formatScientificName($name) {
 if (!$name) return '';
-return preg_replace_callback(
-'/\b(sp|spp|cf|var|subsp|f|n)\.?$/i',
-fn($matches) => "<span class=\"not-italic\">{$matches[0]}</span>",
-$name
-);
+
+$nonItalic = ['sp', 'spp', 'cf', 'aff', 'var', 'subsp', 'f', 'nom\. nov'];
+
+$words = preg_split('/\s+/', $name);
+
+$formatted = [];
+
+foreach ($words as $word) {
+$cleanWord = rtrim($word, '.');
+
+if (in_array(strtolower($cleanWord), $nonItalic)) {
+$formatted[] = $word;
+} else {
+$formatted[] = "<em>{$word}</em>";
+}
+}
+
+return implode(' ', $formatted);
 }
 
 function formatTextWithItalic($text) {
@@ -28,6 +41,7 @@ $text = preg_replace("/\b($word)\b/i", '<em>$1</em>', $text);
 return $text;
 }
 @endphp
+
 
 <div class="pb-4 w-full h-fit px-10 max-sm:px-4 text-white">
 
@@ -43,7 +57,7 @@ return $text;
     {{-- Cabeçalho --}}
     <div class="pt-4 flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-white max-lg:text-xl">Detalhes sobre o inseto</h1>
-        <a href="{{ route('insectary.index') }}">
+        <a href="{{ route('insetario.index') }}">
             <button class="p-2 bg-white/90 hover:bg-white/80 text-lg transition-all ease-in-out duration-200 max-md:text-base text-black font-semibold rounded">
                 Voltar
             </button>
@@ -52,6 +66,22 @@ return $text;
 
     {{-- Conteúdo principal --}}
     <div class="flex flex-col gap-3 bg-black/[.30] w-full h-fit rounded px-3 sm:px-5 py-3 mt-4 backdrop-blur-md z-10 text-white text-lg sm:text-xl">
+
+        {{-- Botão fixo para voltar --}}
+        <a href="{{ route('insetario.index') }}"
+            class="fixed top-4 right-4 z-50">
+            <button class="px-3 py-1 rounded-lg text-white bg-[#445a1b] hover:opacity-90">
+                ❮❮
+            </button>
+        </a>
+
+        {{-- Nome Científico --}}
+        <p>
+            <span class="font-semibold text-lg sm:text-xl">Nomes Científico: </span>
+            <span>
+                {!!formatScientificName($insect->scientific_name)!!}
+            </span>
+        </p>
 
         {{-- Nomes Comuns --}}
         <p>
@@ -65,7 +95,7 @@ return $text;
         </p>
 
         {{-- Culturas --}}
-        @if (!empty($insect->cultures))
+        @if (count($insect->cultures))
         <section>
             <span class="font-semibold text-base sm:text-xl">Culturas que Ataca:</span>
             <ul class="mt-2 space-y-1 ml-10">
@@ -95,18 +125,18 @@ return $text;
         @endif
 
         {{-- Tabela Ordem/Família --}}
-        <section class="w-full">
-            <table class="m-auto rounded font-bold max-w-2xl w-full max-md:text-sm">
-                <thead class="bg-white text-black rounded">
+        <section class="w-full my-6">
+            <table class="m-auto w-full max-w-2xl text-left rounded-lg overflow-hidden shadow-lg">
+                <thead class="bg-[#22371c] text-white">
                     <tr>
-                        <th class="p-2 border border-black">Ordem</th>
-                        <th class="p-2 border border-black">Família</th>
+                        <th class="p-3 text-center">Ordem</th>
+                        <th class="p-3 text-center">Família</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="text-center">
-                        <td class="p-2 border border-black">{{ $insect->order->name }}</td>
-                        <td class="p-2 border border-black">{{ $insect->family->name }}</td>
+                <tbody class="bg-white">
+                    <tr class="text-center hover:bg-[#445a1b]/20 transition-colors">
+                        <td class="p-3 border-b border-gray-200 font-bold">{{ $insect->order->name }}</td>
+                        <td class="p-3 border-b border-gray-200 font-bold">{{ $insect->family->name }}</td>
                     </tr>
                 </tbody>
             </table>

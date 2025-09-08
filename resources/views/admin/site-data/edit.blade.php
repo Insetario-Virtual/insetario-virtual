@@ -9,7 +9,7 @@
             Voltar
         </a>
     </div>
-    <form method="POST" action="{{ route('admin.site-data.update', $siteData) }}" class="space-y-4">
+    <form method="POST" action="{{ route('admin.site-data.update', $siteData->id) }}" class="space-y-4">
         @csrf
         @method('PUT')
         <div>

@@ -61,12 +61,14 @@ class SiteContentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SiteContent $siteData)
+    public function update(Request $request, int $id)
     {
         $request->validate([
             'title' => 'required|string|max:100',
             'description' => 'string',
         ]);
+
+        $siteData = SiteContent::findOrFail($id);
 
         $siteData->update($request->only('title', 'description'));
 
@@ -76,8 +78,10 @@ class SiteContentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SiteContent $siteData)
+    public function destroy(int $id)
     {
+        $siteData = SiteContent::findOrFail($id);
+
         $siteData->delete();
 
         return redirect()->route('admin.site-data.index');
