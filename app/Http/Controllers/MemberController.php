@@ -62,7 +62,11 @@ class MemberController extends Controller
      */
     public function update(UpdateMemberRequest $request, Member $member)
     {
-        //
+        $request->validated();
+
+        $member->update($request->all());
+
+        return redirect()->route('admin.members.index')->with('success', 'Culture updated successfully.');
     }
 
     /**

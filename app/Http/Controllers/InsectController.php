@@ -211,9 +211,11 @@ class InsectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Insect $insect)
+    public function edit(int $id)
     {
-        return view('admin.families.edit');
+        $insect = Insect::findOrFail($id);
+
+        return view('admin.insectary.edit');
     }
 
     /**

@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('insectary.index', function ($view) {
+        View::composer(['insectary.index', 'admin.insectary.edit'], function ($view) {
             $view->with('orders', Order::all());
             $view->with('families', Family::all());
             $view->with('cultures', Culture::all());
