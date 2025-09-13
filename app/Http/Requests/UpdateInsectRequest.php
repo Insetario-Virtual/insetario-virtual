@@ -22,7 +22,12 @@ class UpdateInsectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'scientific_name' => 'string|max:255',
+            'order_id' => 'required|exists:orders,id',
+            'family_id' => 'required|exists:families,id',
+            'predator' => 'boolean',
+            'importance' => 'required|string',
+            'morphology' => 'required|string',
         ];
     }
 }

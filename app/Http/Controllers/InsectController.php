@@ -6,13 +6,14 @@ use App\Models\Insect;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreInsectRequest;
 use App\Http\Requests\UpdateInsectRequest;
+use App\Models\Culture;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InsectController extends Controller
 {
-    private function getOrganizedData()
+    private function getAllInsects()
     {
         return Order::with(['families' => function ($query) {
             $query->orderBy('name', 'asc')->with(['insects' => function ($q) {
@@ -20,7 +21,7 @@ class InsectController extends Controller
             }]);
         }])->orderBy('name', 'asc')->get();
     }
-    private function getOrganizedData2(array $filters = [])
+    private function getFilteredInsects(array $filters = [])
     {
         $query = DB::table('insects')
             ->select(
@@ -73,21 +74,9 @@ class InsectController extends Controller
             $query->where('cultures.id', $filters['culture']);
         }
 
-
-
-        // $results = $query->orderBy('orders.name')
-        //     ->orderBy('families.name')
-        //     ->orderBy('insects.scientific_name')
-        //     ->get();
-
         $results = $query->get();
 
-
-
-
-        // 🔹 Reorganizar no formato (ordens → famílias → insetos)
         $orders = [];
-
 
         foreach ($results as $row) {
             $orderId = $row->order_id;
@@ -133,9 +122,7 @@ class InsectController extends Controller
             'culture',
         ]);
 
-
-        $organized = (!sizeof($filters)) ?  $this->getOrganizedData() : $this->getOrganizedData2($filters);
-
+        $organized = (!sizeof($filters)) ?  $this->getAllInsects() : $this->getFilteredInsects($filters);
 
         return view('insectary.index', compact('organized'));
     }
@@ -143,7 +130,7 @@ class InsectController extends Controller
 
     public function indexAdmin()
     {
-        $orders = $this->getOrganizedData();
+        $orders = $this->getAllInsects();
         return view('admin.insectary.index', compact('orders'));
     }
 
@@ -155,8 +142,8 @@ class InsectController extends Controller
         $orders = Order::with('families')
             ->orderBy('name', 'asc')
             ->get();
-
-        return view('admin.insectary.create', compact('orders'));
+        $cultures = Culture::all();
+        return view('admin.insectary.create', compact('orders', 'cultures'));
     }
 
     /**
@@ -173,12 +160,15 @@ class InsectController extends Controller
                 $insect->commonNames()->createMany(
                     collect($request->input('common_names'))
                         ->filter(fn($name) => !empty($name))
-                        ->map(fn($name) => ['name' => $name])
+                        ->map(fn($name) => [
+                            'name' => $name,
+                            'insect_id'   => $insect->id
+                        ])
                         ->toArray()
                 );
             }
 
-            // Store cultures
+            // Store cultures (pivot table insect_culture)
             if ($request->has('cultures')) {
                 $insect->cultures()->sync($request->input('cultures'));
             }
@@ -187,13 +177,16 @@ class InsectController extends Controller
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('insects', 'public');
-                    $insect->images()->create(['path' => $path]);
+                    $insect->images()->create([
+                        'path'       => $path,
+                        'insect_id'  => $insect->id
+                    ]);
                 }
             }
         });
 
-        return redirect()->route('admin.insects.index')
-            ->with('success', 'Insect created successfully.');
+        return redirect()->route('admin.insectary.index')
+            ->with('success', 'Inseto criado com sucesso.');
     }
 
 
@@ -213,9 +206,10 @@ class InsectController extends Controller
      */
     public function edit(int $id)
     {
-        $insect = Insect::findOrFail($id);
+        $insect = Insect::with(['commonNames', 'cultures', 'images'])
+            ->findOrFail($id);
 
-        return view('admin.insectary.edit');
+        return view('admin.insectary.edit', compact('insect'));
     }
 
     /**
@@ -233,25 +227,28 @@ class InsectController extends Controller
                 $insect->commonNames()->createMany(
                     collect($request->input('common_names'))
                         ->filter(fn($name) => !empty($name))
-                        ->map(fn($name) => ['name' => $name])
+                        ->map(fn($name) => [
+                            'name' => $name,
+                            'insect_id'   => $insect->id
+                        ])
                         ->toArray()
                 );
             }
 
-            // Update cultures
+            // Update cultures (sync with pivot insect_culture)
             $insect->cultures()->sync($request->input('cultures', []));
 
-            // Add new images
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $path = $image->store('insects', 'public');
-                    $insect->images()->create(['path' => $path]);
-                }
-            }
+            // Add new images (uncomment if needed)
+            // if ($request->hasFile('images')) {
+            //     foreach ($request->file('images') as $image) {
+            //         $path = $image->store('insects', 'public');
+            //         $insect->images()->create(['path' => $path]);
+            //     }
+            // }
         });
 
-        return redirect()->route('admin.insects.index')
-            ->with('success', 'Insect updated successfully.');
+        return redirect()->route('admin.insectary.index')
+            ->with('success', 'Inseto criado com sucesso.');
     }
 
     /**

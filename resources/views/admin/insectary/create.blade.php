@@ -32,7 +32,7 @@
         <!-- Order + Family -->
         <div class="mb-4">
             <label class="block font-semibold">Ordem:</label>
-            <select name="id_order" id="orderSelect" class="w-full border rounded p-2" required>
+            <select name="order_id" id="orderSelect" class="w-full border rounded p-2" required>
                 <option value="">Selecione a Ordem</option>
                 @foreach($orders as $order)
                 <option value="{{ $order->id }}">{{ $order->name }}</option>
@@ -42,7 +42,7 @@
 
         <div class="mb-4">
             <label class="block font-semibold">Família:</label>
-            <select name="id_family" id="familySelect" class="w-full border rounded p-2" required>
+            <select name="family_id" id="familySelect" class="w-full border rounded p-2" required>
                 <option value="">Selecione a Família</option>
             </select>
         </div>
@@ -53,6 +53,24 @@
                 <input type="checkbox" name="predator" value="1">
                 <span>É Predador?</span>
             </label>
+        </div>
+
+        <!-- Cultures -->
+        <div class="mb-4">
+            <label class="block font-semibold">Culturas:</label>
+            <div id="culturesWrapper">
+                <select name="cultures[]" id="cultures" class="w-full border rounded p-2">
+                    <option value="" selected> Selecione uma Cultura</option>
+                    @foreach($cultures as $culture)
+                    <option value="{{ $culture->id }}">
+                        {{ $culture->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="button" id="addCulture" class="bg-blue-600 text-white px-3 py-1 rounded">
+                + Adicionar Cultura
+            </button>
         </div>
 
         <!-- Importance -->
@@ -103,6 +121,46 @@
 
         return wrapper;
     }
+
+    const cultures = @json($cultures);
+
+    function createSelectField(name) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'flex items-center gap-2 mb-2';
+
+        const select = document.createElement('select');
+        select.name = name;
+        select.className = 'w-full border rounded p-2';
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Selecione uma Cultura';
+        select.appendChild(defaultOption);
+
+        cultures.forEach(c => {
+            const option = document.createElement('option');
+            option.value = c.id;
+            option.textContent = c.name;
+            select.appendChild(option);
+        });
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = '✕';
+        btn.className = 'bg-red-500 text-white px-2 py-1 rounded';
+        btn.addEventListener('click', () => wrapper.remove());
+
+        wrapper.appendChild(select);
+        wrapper.appendChild(btn);
+
+        return wrapper;
+    }
+
+    // Add new culture select
+    document.getElementById('addCulture').addEventListener('click', function() {
+        const wrapper = document.getElementById('culturesWrapper');
+        wrapper.appendChild(createSelectField('cultures[]'));
+    });
 
     // Add Common Name
     document.getElementById('addCommonName').addEventListener('click', function() {
