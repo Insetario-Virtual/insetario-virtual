@@ -4,3 +4,41 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+@layer base {
+  body.page-background {
+    @apply bg-cover bg-center bg-fixed transition-all duration-2000 relative;
+    background-image: url('/storage/app/public/backgroundImages/computer/ladybird.png');
+    animation: changeBackground 50s infinite alternate ease-in-out;
+  }
+
+  body.page-background::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: inherit;
+    filter: brightness(0.4) blur(6px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @keyframes changeBackground {
+    0% {
+      background-image: url('/storage/app/public/backgroundImages/computer/ladybird.png');
+    }
+    50% {
+      background-image: url('/storage/app/public/backgroundImages/computer/praying_mantis.png');
+    }
+    100% {
+      background-image: url('/storage/app/public/backgroundImages/computer/ladybird.png');
+    }
+  }
+
+  @media (max-width: 768px) {
+    body.page-background {
+      background-image: url('/storage/app/public/backgroundImages/mobile/dragon-fly.jpg');
+      background-attachment: scroll;
+      animation: none;
+    }
+  }
+}

@@ -1,35 +1,56 @@
-<header class="fixed top-0 left-0 w-full h-16 shadow-md z-30 bg-white" x-data="{ open: false } bg-[#21361b]">
-    <div class="flex items-center justify-between h-full px-10 max-sm:p-4">
+<header class="fixed top-0 left-0 w-full bg-[#21361b]/95 backdrop-blur-md shadow-md z-30 text-white">
+    <div class="flex items-center justify-between h-16 px-6 sm:px-10 max-w-7xl mx-auto">
 
-        <a href="#">
-            <div class="flex items-center gap-2 font-bold text-xl md:text-2xl cursor-pointer">
-                <img src="{{ asset('storage/icons/insetario.png') }}" alt="Logo do Insetário Virtual" class="h-11 sm:h-12 rounded-full">
-                <span>Insetário Virtual</span>
-            </div>
+        <a href="/" class="flex items-center gap-2 font-semibold text-lg sm:text-xl">
+            <img src="{{ asset('storage/icons/insetario.png') }}"
+                alt="Logo do Insetário Virtual"
+                class="h-10 w-10 rounded-full shadow-md">
+            <span class="tracking-wide">Insetário Virtual</span>
         </a>
 
-        <div class="flex gap-7 md:gap-20">
-
-            <nav :class="`absolute sm:static top-14 sm:top-0 right-0 w-fit sm:w-auto sm:flex items-center bg-white sm:bg-transparent transition-all duration-500 ease-in-out overflow-hidden ${open ? 'max-h-[300px] opacity-100 shadow-lg' : 'max-h-0 opacity-0'} sm:max-h-none sm:opacity-100`">
-                <ul class="flex flex-col gap-10 p-4 sm:flex-row sm:items-center w-fit sm:w-auto">
-                    @foreach ($links as $link)
-                    <li class="font-semibold text-lg">
-                        <a href="{{ $link['link'] }}" class="text-gray-800 hover:text-[#688A41] transition duration-150" @click="open = false">
-                            {{ $link['name'] }}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </nav>
-
-            <div class="hidden sm:flex items-center gap-4">
-                <img src="{{ asset('storage/icons/if.png') }}" alt="Logo do IFRS" class="h-11 transition duration-500" :class="{ 'hidden': open, 'block': !open }" />
-            </div>
-        </div>
-
-        <button @click="open = !open" class="sm:hidden flex items-center px-2 py-1 rounded-sm transition duration-100 hover:bg-slate-200" :class="{ 'z-50': open, 'z-20': !open }">
-            <i x-show="open" class="pi pi-times" style="font-size: 1.4rem"></i>
-            <i x-show="!open" class="pi pi-bars" style="font-size: 1.4rem"></i>
+        <button id="menu-toggle" class="block md:hidden text-2xl focus:outline-none">
+            ☰
         </button>
+
+        <nav id="menu" class="hidden md:flex flex-col md:flex-row md:items-center absolute md:static top-16 left-0 w-full md:w-auto bg-[#1a2b16] md:bg-transparent shadow-lg md:shadow-none transition-all duration-300">
+            <ul class="flex flex-col md:flex-row items-center md:gap-10 gap-6 py-6 md:py-0">
+                @foreach ($links as $link)
+                <li>
+                    <a href="{{ $link['link'] }}"
+                        class="text-white hover:text-[#9ad06b] font-medium text-lg sm:text-base transition-colors duration-200"
+                        onclick="closeMenu()">
+                        {{ $link['name'] }}
+                    </a>
+                </li>
+                @endforeach
+            </ul>
+        </nav>
+
+        <div class="hidden md:flex items-center">
+            <img src="{{ asset('storage/icons/if.png') }}"
+                alt="Logo do IFRS"
+                class="h-10 opacity-90 hover:opacity-100 transition duration-300">
+        </div>
     </div>
 </header>
+
+<script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+
+    menuToggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+
+    function closeMenu() {
+        if (window.innerWidth < 768) {
+            menu.classList.add("hidden");
+        }
+    }
+
+    document.addEventListener("click", (e) => {
+        if (window.innerWidth < 768 && !menu.contains(e.target) && !menuToggle.contains(e.target)) {
+            menu.classList.add("hidden");
+        }
+    });
+</script>

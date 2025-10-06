@@ -1,61 +1,82 @@
-<footer class="w-full bg-white py-5">
-    <div class="px-10 max-sm:px-4">
-        <div class="flex flex-col md:flex-row md:justify-between gap-x-15 gap-y-8">
+<footer class="w-full bg-[#21361b]/95 text-white py-8 mt-16 backdrop-blur-md shadow-inner">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+        <div class="flex flex-col md:flex-row md:justify-between gap-10">
+
             <div class="flex flex-col md:w-2/5">
-                <div class="flex items-center gap-4 mb-4">
-                    <img src="{{ asset('storage/icons/insetario.png') }}" class="h-10 rounded-full" alt="Logo do Insetário Virtual" />
-                    <span class="text-lg font-sans font-bold">Insetário Virtual</span>
-                    <img src="{{ asset('storage/icons/if.png') }}" class="h-8" alt="Logo do IFRS" />
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="{{ asset('storage/icons/insetario.png') }}"
+                        alt="Logo do Insetário Virtual"
+                        class="h-10 w-10 rounded-full shadow-md">
+                    <span class="text-lg font-semibold tracking-wide">Insetário Virtual</span>
+                    <img src="{{ asset('storage/icons/if.png') }}"
+                        alt="Logo do IFRS"
+                        class="h-8 opacity-90">
                 </div>
-                <p class="text-sm text-gray-600">
-                    Projeto de extensão do IFRS-Campus Bento Gonçalves de um insetário virtual com intuito de
-                    auxiliar alunos de cursos técnicos que envolvam agronomia e comunidade em geral na
-                    identificação de insetos.
+                <p class="text-sm text-gray-300 leading-relaxed">
+                    Projeto de extensão do IFRS - Campus Bento Gonçalves, com o objetivo de auxiliar
+                    estudantes e a comunidade na identificação de insetos de importância agrícola,
+                    tornando o conhecimento acessível e digital.
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 sm:gap-6 md:w-9/12">
-                <div class="pl-0 md:pl-6">
-                    <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase">Navegação</h2>
-                    <ul class="text-gray-600 space-y-2">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-10 md:w-3/5">
+
+                <div>
+                    <h2 class="mb-3 text-sm font-semibold uppercase text-[#9ad06b] tracking-wider">Navegação</h2>
+                    <ul class="space-y-2">
                         @foreach ($links as $link)
-                            <li class="hover:underline">
-                                <a href="{{ $link['link'] }}">
-                                    {{ $link['name'] }}
-                                </a>
-                            </li>
+                        <li>
+                            <a href="{{ $link['link'] }}"
+                                class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
+                                {{ $link['name'] }}
+                            </a>
+                        </li>
                         @endforeach
-                        <li class="hover:underline">
-                            <a href="#">Referências</a>
+                        <li>
+                            <a href="#" class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
+                                Referências
+                            </a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="pl-0 md:pl-6">
-                    <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase">Siga-nos</h2>
-                    <ul class="text-gray-600 space-y-2">
-                        <li><span>Instagram</span></li>
-                        <li><span>GitHub</span></li>
+                <div>
+                    <h2 class="mb-3 text-sm font-semibold uppercase text-[#9ad06b] tracking-wider">Siga-nos</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://instagram.com" target="_blank"
+                                class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
+                                Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com" target="_blank"
+                                class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
+                                GitHub
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="pl-0">
-                    <h2 class="mb-4 text-sm font-semibold text-gray-900 uppercase">Contate-nos</h2>
-                    <ul class="text-gray-600 space-y-2">
+                <div>
+                    <h2 class="mb-3 text-sm font-semibold uppercase text-[#9ad06b] tracking-wider">Contate-nos</h2>
+                    <ul class="space-y-2">
                         <li>
-                            <a href="mailto:insetarioifrs@gmail.com" class="hover:underline">insetarioifrs@gmail.com</a>
+                            <a href="mailto:insetarioifrs@gmail.com"
+                                class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
+                                insetarioifrs@gmail.com
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <hr class="my-6 border-gray-200" />
+        <hr class="my-6 border-gray-700/50">
 
-        <div class="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
-            <span class="text-sm text-gray-500">
-                © 2024 Insetário Virtual. Todos Direitos Reservados.
-            </span>
+        <div class="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left text-gray-400 text-sm">
+            <span>© {{ date('Y') }} Insetário Virtual. Todos os direitos reservados.</span>
+            <span class="mt-2 sm:mt-0">Desenvolvido no IFRS - <i>Campus</i> Bento Gonçalves</span>
         </div>
     </div>
 </footer>

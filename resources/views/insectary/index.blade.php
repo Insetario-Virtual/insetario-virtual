@@ -11,7 +11,7 @@
     <x-filter-form :orders="$orders" :families="$families" :cultures="$cultures" />
 
     <!-- Card com todos os Insetos -->
-    <div class="bg-black/[.25] w-full h-fit rounded px-4 py-3 mt-4 backdrop-blur-md z-10">
+    <div class=" w-full h-fit rounded px-4 py-3 mt-4 z-10">
         @foreach($organized as $order)
         <section class="mt-6">
             <h2 class="text-2xl font-semibold text-white">{{ $order['name'] }}</h2>

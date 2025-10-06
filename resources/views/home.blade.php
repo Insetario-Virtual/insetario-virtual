@@ -5,7 +5,7 @@
 
     <h1 class="pt-4 text-2xl font-semibold text-white">Informações do Projeto</h1>
 
-    <div class="bg-black/[.25] w-full h-fit rounded px-4 py-3 mt-4 backdrop-blur-md z-10">
+    <div class="w-full h-fit rounded px-4 py-3 mt-4 z-10">
 
         @foreach ($siteContent as $content)
         <section>

@@ -134,9 +134,9 @@ return $text;
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <tr class="text-center hover:bg-[#445a1b]/20 transition-colors">
-                        <td class="p-3 border-b border-gray-200 font-bold">{{ $insect->order->name }}</td>
-                        <td class="p-3 border-b border-gray-200 font-bold">{{ $insect->family->name }}</td>
+                    <tr class="text-center bg-[#445a1b]/70">
+                        <td class="p-3 font-bold">{{ $insect->order->name }}</td>
+                        <td class="p-3 font-bold">{{ $insect->family->name }}</td>
                     </tr>
                 </tbody>
             </table>
