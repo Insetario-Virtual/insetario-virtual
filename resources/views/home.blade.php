@@ -9,8 +9,8 @@
 
         @foreach ($siteContent as $content)
         <section>
-            <h2 class="mt-3 text-xl font-semibold text-white">{{ $content->title }}</h2>
-            <p class="w-full text-justify text-white pl-4 text-lg">
+            <h2 class="mt-5 text-xl font-semibold text-white">{{ $content->title }}</h2>
+            <p class="w-full text-justify text-white pl-12 pt-3 pb-4 text-lg">
                 {{ $content->description }}
             </p>
         </section>
