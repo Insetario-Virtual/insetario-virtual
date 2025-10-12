@@ -17,10 +17,12 @@ class InsectController extends Controller
     {
         return Order::with(['families' => function ($query) {
             $query->orderBy('name', 'asc')->with(['insects' => function ($q) {
-                $q->orderBy('scientific_name', 'asc');
+                $q->orderBy('scientific_name', 'asc')
+                    ->with('firstImage');
             }]);
         }])->orderBy('name', 'asc')->get();
     }
+
     private function getFilteredInsects(array $filters = [])
     {
         $query = DB::table('insects')
@@ -32,6 +34,7 @@ class InsectController extends Controller
                 'insects.predator',
                 'orders.name as order_name',
                 'families.name as family_name',
+                DB::raw("(SELECT image_path FROM insect_images WHERE insect_images.insect_id = insects.id ORDER BY id ASC LIMIT 1) as image_path"),
                 DB::raw('GROUP_CONCAT(DISTINCT common_names.name SEPARATOR ", ") as common_names')
             )
             ->join('orders', 'insects.order_id', '=', 'orders.id')
@@ -102,6 +105,7 @@ class InsectController extends Controller
                 'id' => $row->id,
                 'common_name' => $row->common_names,
                 'scientific_name' => $row->scientific_name,
+                'image_path' => $row->image_path,
             ];
         }
 

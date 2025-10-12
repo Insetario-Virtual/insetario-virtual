@@ -20,9 +20,9 @@
             <h2 class="mt-3 text-xl font-semibold text-white">Equipe:</h2>
             <div class="w-full h-fit flex justify-center gap-2 flex-wrap mt-3">
                 @foreach ($members as $member)
-                    @if ($member->active)
-                        <x-team-member-card :member="$member" />
-                    @endif
+                @if ($member->active)
+                <x-team-member-card :member="$member" />
+                @endif
                 @endforeach
             </div>
         </section>

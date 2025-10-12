@@ -4,13 +4,10 @@
 
 @section('content')
 
-
 <div class="pb-4 w-full h-fit px-10 max-sm:px-4 bg-fixed bg-no-repeat bg-cover bg-center">
 
-    <!-- Fomrulário para Filtragem -->
     <x-filter-form :orders="$orders" :families="$families" :cultures="$cultures" />
 
-    <!-- Card com todos os Insetos -->
     <div class=" w-full h-fit rounded px-4 py-3 mt-4 z-10">
         @foreach($organized as $order)
         <section class="mt-6">
@@ -22,10 +19,47 @@
 
                 <div class="flex flex-wrap gap-4 mt-3">
                     @foreach($family['insects'] as $insect)
+                    @php
+
+                    $isEloquentModel = $insect instanceof \App\Models\Insect;
+
+                    $id = $isEloquentModel ? $insect->id : ($insect['id'] ?? null);
+                    $commonName = $isEloquentModel 
+                        ? ($insect->commonNames->first()->name ?? null) 
+                        : ($insect['common_name'] ?? null);
+                        
+                    $scientificName = $isEloquentModel ? $insect->scientific_name : ($insect['scientific_name'] ?? null);
+
+                    $imagePathRaw = $isEloquentModel ? $insect->image_path : ($insect['image_path'] ?? null);
+                    
+                    $imagePath = $imagePathRaw;
+                    if (!$isEloquentModel && $imagePathRaw && !str_starts_with($imagePathRaw, 'insect_images/')) {
+                        $imagePath = 'insect_images/' . $imagePathRaw; 
+                    }
+
+                    @endphp
+
+                    <a href="{{ route('insetario.show', ['id' => $id]) }}"
+                        class="block rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                        <div class="h-40 bg-gray-100 overflow-hidden">
+                            <img
+                                src="{{ asset($imagePath) }}"
+                                alt="{{ $scientificName }}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 flex flex-col items-center">
+                            <h3 class="text-lg font-semibold text-gray-100 capitalize">{{ $commonName }}</h3>
+                            <p class="text-md text-gray-400 italic capitalize">{{ $scientificName }}</p>
+                        </div>
+                    </a>
+
+                    {{-- Se quiser voltar a usar o componente, descomente abaixo --}}
+                    {{--
                     <x-insect-card
-                        :id="$insect['id']"
-                        :common_name="$insect['common_name']"
-                        :scientific_name="$insect['scientific_name']" />
+                        :id="$id"
+                        :common_name="$commonName"
+                        :scientific_name="$scientificName"
+                        :image_path="$imagePath" />
+                    --}}
                     @endforeach
                 </div>
             </div>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage; // Importar para usar o Storage::url/asset
 
 class Insect extends Model
 {
@@ -46,5 +48,21 @@ class Insect extends Model
     public function images(): HasMany
     {
         return $this->hasMany(InsectImage::class);
+    }
+
+    public function firstImage(): HasOne
+    {
+        return $this->hasOne(InsectImage::class)->oldestOfMany();
+    }
+
+    public function getImagePathAttribute(): string
+    {
+        $imagePath = optional($this->firstImage)->image_path;
+
+        if ($imagePath) {
+            return 'storage/' . $imagePath;
+        }
+
+        return 'storage/icons/insetario.png';
     }
 }
