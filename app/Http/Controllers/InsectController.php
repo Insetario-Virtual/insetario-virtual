@@ -201,7 +201,7 @@ class InsectController extends Controller
     {
         $insect = Insect::with(['family', 'order', 'commonNames', 'cultures', 'images'])
             ->findOrFail($id);
-
+        
         return view('insectary.detail', compact('insect'));
     }
 

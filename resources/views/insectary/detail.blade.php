@@ -109,15 +109,17 @@ return $text;
         @endif
 
         {{-- Imagens --}}
-        @if (!empty($images))
+        @if (!empty($insect->images))
+
         <section class="w-full">
             <h2 class="text-lg sm:text-xl font-bold">Imagens do Inseto:</h2>
             <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                @foreach ($images as $index => $image)
+                @foreach ($insect->images as $index => $image)
                 <div class="col-span-1">
-                    <img src="{{ $image->path }}" alt="Imagem do inseto"
-                        class="w-full h-auto rounded shadow-lg cursor-pointer insect-image"
-                        data-index="{{ $index }}" />
+                    <img src="{{ "/storage/" . $image->image_path }}" alt="Imagem do inseto"
+
+                    class="w-full h-auto rounded shadow-lg cursor-pointer insect-image"
+                    data-index="{{ $index }}" />
                 </div>
                 @endforeach
             </div>

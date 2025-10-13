@@ -24,29 +24,31 @@
                     $isEloquentModel = $insect instanceof \App\Models\Insect;
 
                     $id = $isEloquentModel ? $insect->id : ($insect['id'] ?? null);
-                    $commonName = $isEloquentModel 
-                        ? ($insect->commonNames->first()->name ?? null) 
-                        : ($insect['common_name'] ?? null);
-                        
+                    $commonName = $isEloquentModel
+                    ? ($insect->commonNames->first()->name ?? null)
+                    : ($insect['common_name'] ?? null);
+
                     $scientificName = $isEloquentModel ? $insect->scientific_name : ($insect['scientific_name'] ?? null);
 
                     $imagePathRaw = $isEloquentModel ? $insect->image_path : ($insect['image_path'] ?? null);
-                    
+
                     $imagePath = $imagePathRaw;
-                    if (!$isEloquentModel && $imagePathRaw && !str_starts_with($imagePathRaw, 'insect_images/')) {
-                        $imagePath = 'insect_images/' . $imagePathRaw; 
+                    if (!$isEloquentModel && $imagePathRaw && !str_starts_with($imagePathRaw, '/storage/insect_images/')) {
+                    $imagePath = '/storage/' . $imagePathRaw;
                     }
 
                     @endphp
 
                     <a href="{{ route('insetario.show', ['id' => $id]) }}"
-                        class="block rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                        <div class="h-40 bg-gray-100 overflow-hidden">
+                        class="flex md:flex-col rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+
+                        <div class="h-full w-40 md:h-40 md:w-full bg-gray-100 overflow-hidden flex-shrink-0">
                             <img
                                 src="{{ asset($imagePath) }}"
-                                alt="{{ $scientificName }}" class="w-full h-full object-cover">
+                                alt="{{ $scientificName }}"
+                                class="w-full h-full object-cover">
                         </div>
-                        <div class="p-4 flex flex-col items-center">
+                        <div class="p-4 flex flex-col items-start justify-center w-full md:items-center md:w-full">
                             <h3 class="text-lg font-semibold text-gray-100 capitalize">{{ $commonName }}</h3>
                             <p class="text-md text-gray-400 italic capitalize">{{ $scientificName }}</p>
                         </div>

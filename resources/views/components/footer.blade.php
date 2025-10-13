@@ -44,13 +44,13 @@
                     <h2 class="mb-3 text-sm font-semibold uppercase text-[#9ad06b] tracking-wider">Siga-nos</h2>
                     <ul class="space-y-2">
                         <li>
-                            <a href="https://instagram.com" target="_blank"
+                            <a href="https://www.instagram.com/insetario_ifrs_bg?igsh=MXJ3YTZrZWkxZ2s4aA==" target="_blank"
                                 class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
                                 Instagram
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com" target="_blank"
+                            <a href="https://www.instagram.com/insetario_ifrs_bg?igsh=MXJ3YTZrZWkxZ2s4aA==" target="_blank"
                                 class="text-gray-200 hover:text-[#9ad06b] transition-colors duration-200">
                                 GitHub
                             </a>
