@@ -123,12 +123,13 @@
             <label class="block font-medium">Imagens:</label>
             <div class="mb-2">
                 @foreach($insect->images as $img)
-                <img src="{{ asset('storage/'.$img->path) }}" alt="Insect image" class="w-24 h-24 object-cover inline-block mr-2">
+                <img src="{{ asset('storage/'.$img->image_path) }}" alt="Insect image" class="w-24 h-24 object-cover inline-block mr-2">
                 @endforeach
             </div>
             <div id="imagesWrapper">
                 <div class="flex items-center gap-2 mb-2">
                     <input type="file" name="images[]" class="w-full border rounded px-3 py-2">
+                    @error('images.*') <p class="text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
             <button type="button" id="addImage"

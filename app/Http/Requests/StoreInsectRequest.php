@@ -28,6 +28,8 @@ class StoreInsectRequest extends FormRequest
             'predator' => 'boolean',
             'importance' => 'required|string',
             'morphology' => 'required|string',
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
     }
 }

@@ -157,7 +157,10 @@ class InsectController extends Controller
     {
         DB::transaction(function () use ($request) {
             // Create the insect
-            $insect = Insect::create($request->validated());
+            $validated = $request->validated();
+            unset($validated['images']);
+
+            $insect = Insect::create($validated);
 
             // Store common names
             if ($request->has('common_names')) {
@@ -182,8 +185,7 @@ class InsectController extends Controller
                 foreach ($request->file('images') as $image) {
                     $path = $image->store('insects', 'public');
                     $insect->images()->create([
-                        'path'       => $path,
-                        'insect_id'  => $insect->id
+                        'image_path' => $path,
                     ]);
                 }
             }
@@ -223,7 +225,10 @@ class InsectController extends Controller
     {
         DB::transaction(function () use ($request, $insect) {
             // Update insect main data
-            $insect->update($request->validated());
+            $validated = $request->validated();
+            unset($validated['images']);
+
+            $insect->update($validated);
 
             // Update common names
             $insect->commonNames()->delete();
@@ -242,17 +247,17 @@ class InsectController extends Controller
             // Update cultures (sync with pivot insect_culture)
             $insect->cultures()->sync($request->input('cultures', []));
 
-            // Add new images (uncomment if needed)
-            // if ($request->hasFile('images')) {
-            //     foreach ($request->file('images') as $image) {
-            //         $path = $image->store('insects', 'public');
-            //         $insect->images()->create(['path' => $path]);
-            //     }
-            // }
+            // Add new images
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('insects', 'public');
+                    $insect->images()->create(['image_path' => $path]);
+                }
+            }
         });
 
         return redirect()->route('admin.insectary.index')
-            ->with('success', 'Inseto criado com sucesso.');
+            ->with('success', 'Inseto atualizado com sucesso.');
     }
 
     /**
