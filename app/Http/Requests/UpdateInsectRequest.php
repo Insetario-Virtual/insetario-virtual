@@ -29,7 +29,18 @@ class UpdateInsectRequest extends FormRequest
             'importance' => 'required|string',
             'morphology' => 'required|string',
             'images' => ['nullable', 'array'],
-            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:5120'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'images.array' => 'As imagens devem ser enviadas como uma lista de arquivos.',
+            'images.*.uploaded' => 'Não foi possível enviar uma das imagens. Verifique se ela possui no máximo 5 MB.',
+            'images.*.image' => 'Cada arquivo enviado deve ser uma imagem válida.',
+            'images.*.mimes' => 'As imagens devem estar nos formatos JPEG, JPG ou PNG.',
+            'images.*.max' => 'Cada imagem deve ter no máximo 5 MB.',
         ];
     }
 }

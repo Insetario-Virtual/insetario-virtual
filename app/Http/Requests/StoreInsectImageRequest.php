@@ -40,7 +40,7 @@ class StoreInsectImageRequest extends FormRequest
 
             // Images
             'images'          => ['nullable', 'array'],
-            'images.*'        => ['image', 'mimes:jpeg,png,jpg', 'max:2048'], // 2MB max per file
+            'images.*'        => ['image', 'mimes:jpeg,png,jpg', 'max:5120'], // 5MB max per file
         ];
     }
 }

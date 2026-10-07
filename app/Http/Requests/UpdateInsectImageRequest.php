@@ -42,7 +42,7 @@ class UpdateInsectImageRequest extends FormRequest
             'cultures.*' => ['integer', 'exists:cultures,id'],
 
             'images'     => ['nullable', 'array'],
-            'images.*'   => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'images.*'   => ['image', 'mimes:jpeg,png,jpg', 'max:5120'],
         ];
     }
 }
