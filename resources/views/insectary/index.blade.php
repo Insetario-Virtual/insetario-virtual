@@ -51,7 +51,7 @@
                         </div>
                         <div class="p-4 flex flex-col items-start justify-center w-full md:items-center md:w-full">
                             <h3 class="text-lg font-semibold text-gray-100 capitalize">{{ $commonName }}</h3>
-                            <p class="text-md text-gray-400 italic capitalize">{{ $scientificName }}</p>
+                            <p class="text-md text-gray-400 italic normal-case">{{ $scientificName }}</p>
                         </div>
                     </a>
 
