@@ -17,7 +17,7 @@
         <div class="mb-4">
             <label for="scientific_name" class="block font-medium">Nome Científico:</label>
             <input type="text" name="scientific_name" id="scientific_name"
-                value="{{ old('scientific_name', $insect->scientific_name) }}"
+                value="{{ old('scientific_name', $insect->formatted_scientific_name) }}"
                 class="w-full border rounded px-3 py-2">
             @error('scientific_name') <p class="text-red-600">{{ $message }}</p> @enderror
         </div>

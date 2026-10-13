@@ -13,6 +13,8 @@ return $index === 0 ? ucfirst($name) : strtolower($name);
 function formatScientificName($name) {
 if (!$name) return '';
 
+$name = \App\Models\Insect::formatScientificName($name);
+
 $nonItalic = ['sp', 'spp', 'cf', 'aff', 'var', 'subsp', 'f', 'nom\. nov'];
 
 $words = preg_split('/\s+/', $name);

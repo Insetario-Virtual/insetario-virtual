@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Insect;
 use Illuminate\View\Component;
 
 class InsectCard extends Component
@@ -15,7 +16,7 @@ class InsectCard extends Component
     {
         $this->id = $id;
         $this->common_name = $common_name;
-        $this->scientific_name = $scientific_name;
+        $this->scientific_name = Insect::formatScientificName($scientific_name);
         $this->imagePath = $imagePath;
     }
 

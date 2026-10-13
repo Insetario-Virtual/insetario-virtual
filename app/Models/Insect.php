@@ -25,6 +25,28 @@ class Insect extends Model
         'morphology'
     ];
 
+    /**
+     * Format a scientific name for display without changing the stored value.
+     */
+    public static function formatScientificName(?string $name): string
+    {
+        $name = trim((string) $name);
+
+        if ($name === '') {
+            return '';
+        }
+
+        $name = mb_strtolower($name, 'UTF-8');
+
+        return mb_strtoupper(mb_substr($name, 0, 1, 'UTF-8'), 'UTF-8')
+            . mb_substr($name, 1, null, 'UTF-8');
+    }
+
+    public function getFormattedScientificNameAttribute(): string
+    {
+        return self::formatScientificName($this->scientific_name);
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

@@ -29,6 +29,7 @@
                     : ($insect['common_name'] ?? null);
 
                     $scientificName = $isEloquentModel ? $insect->scientific_name : ($insect['scientific_name'] ?? null);
+                    $scientificName = \App\Models\Insect::formatScientificName($scientificName);
 
                     $imagePathRaw = $isEloquentModel ? $insect->image_path : ($insect['image_path'] ?? null);
 

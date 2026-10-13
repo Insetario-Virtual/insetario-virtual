@@ -42,7 +42,7 @@
                         @foreach($family->insects as $insect)
                         <tr class="border-t">
                             <td class="px-4 py-2">{{ $insect->commonNames->pluck('name')->implode(', ') }}</td>
-                            <td class="px-4 py-2 italic">{{ $insect->scientific_name }}</td>
+                            <td class="px-4 py-2 italic">{{ $insect->formatted_scientific_name }}</td>
                             <td class="px-4 py-2">{{ $insect->predator ? 'Sim' : 'Não' }}</td>
                             <td class="px-4 py-2">{{ $insect->importance }}</td>
                             <td class="px-4 py-2 space-x-2 flex">
