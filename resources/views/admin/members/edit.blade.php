@@ -11,7 +11,7 @@
             Voltar
         </a>
     </div>
-    <form action="{{ route('admin.members.update', $member->id) }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.members.update', $member->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -46,7 +46,7 @@
         <div class="mb-4">
             <label class="block font-semibold">Imagem:</label>
             <div class="flex items-center gap-2 mb-2">
-                <input type="file" name="image_path" class="w-full border rounded p-2">
+                <input type="file" name="image_path" accept=".jpg,.jpeg,.png,.webp" class="w-full border rounded p-2">
             </div>
         </div>
 

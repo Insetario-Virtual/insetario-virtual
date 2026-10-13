@@ -31,10 +31,18 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
-        $request->validated();
+        $data = $request->validated();
 
+        if ($request->hasFile('image_path')) {
+            $file = $request->file('image_path');
+            $filename = $file->hashName();
+            $file->storeAs('teamImages', $filename, 'public');
+            $data['image_path'] = $filename;
+        } else {
+            unset($data['image_path']);
+        }
 
-        Member::create($request->all());
+        Member::create($data);
 
         return redirect()->route('admin.members.index')->with('success', 'Member created successfully.');
     }
@@ -62,9 +70,18 @@ class MemberController extends Controller
      */
     public function update(UpdateMemberRequest $request, Member $member)
     {
-        $request->validated();
+        $data = $request->validated();
 
-        $member->update($request->all());
+        if ($request->hasFile('image_path')) {
+            $file = $request->file('image_path');
+            $filename = $file->hashName();
+            $file->storeAs('teamImages', $filename, 'public');
+            $data['image_path'] = $filename;
+        } else {
+            unset($data['image_path']);
+        }
+
+        $member->update($data);
 
         return redirect()->route('admin.members.index')->with('success', 'Culture updated successfully.');
     }

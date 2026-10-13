@@ -25,7 +25,7 @@ class UpdateMemberRequest extends FormRequest
             'name' => 'required|string|max:255',
             'role' => 'required|string|max:255',
             'active' => 'required|boolean',
-            'image_path' => 'nullable'
+            'image_path' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:5120'],
         ];
     }
 }
