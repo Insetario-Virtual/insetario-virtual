@@ -50,7 +50,10 @@ class InsectController extends Controller
                 'insects.predator',
                 'orders.name',
                 'families.name'
-            );
+            )
+            ->orderBy('orders.name', 'asc')
+            ->orderBy('families.name', 'asc')
+            ->orderBy('insects.scientific_name', 'asc');
 
         // Filtros
         if (!empty($filters['scientific_name'])) {
@@ -143,10 +146,12 @@ class InsectController extends Controller
      */
     public function create()
     {
-        $orders = Order::with('families')
+        $orders = Order::with(['families' => function ($query) {
+            $query->orderBy('name', 'asc');
+        }])
             ->orderBy('name', 'asc')
             ->get();
-        $cultures = Culture::all();
+        $cultures = Culture::orderBy('name', 'asc')->get();
         return view('admin.insectary.create', compact('orders', 'cultures'));
     }
 

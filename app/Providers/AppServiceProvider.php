@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer(['insectary.index', 'admin.insectary.edit'], function ($view) {
-            $view->with('orders', Order::all());
-            $view->with('families', Family::all());
-            $view->with('cultures', Culture::all());
+            $view->with('orders', Order::orderBy('name', 'asc')->get());
+            $view->with('families', Family::orderBy('name', 'asc')->get());
+            $view->with('cultures', Culture::orderBy('name', 'asc')->get());
         });
     }
 }

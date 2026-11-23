@@ -6,6 +6,11 @@
 @source '../**/*.js';
 
 @layer base {
+  select option {
+    background-color: #ffffff;
+    color: #1f2937;
+  }
+
   body.page-background {
     @apply bg-cover bg-center bg-fixed transition-all duration-2000 relative;
     background-image: url('/storage/app/public/backgroundImages/computer/ladybird.png');

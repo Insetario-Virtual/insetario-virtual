@@ -41,15 +41,15 @@
                     @endphp
 
                     <a href="{{ route('insetario.show', ['id' => $id]) }}"
-                        class="flex md:flex-col rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                        class="flex md:flex-col w-full md:w-56 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
 
-                        <div class="h-full w-40 md:h-40 md:w-full bg-gray-100 overflow-hidden flex-shrink-0">
+                        <div class="h-36 w-40 md:h-40 md:w-full bg-gray-100 overflow-hidden flex-shrink-0">
                             <img
                                 src="{{ asset($imagePath) }}"
                                 alt="{{ $scientificName }}"
-                                class="w-full h-full object-cover">
+                                class="w-full h-36 md:h-40 object-cover">
                         </div>
-                        <div class="p-4 flex flex-col items-start justify-center w-full md:items-center md:w-full">
+                        <div class="p-4 flex flex-col items-start justify-center w-full md:items-center md:text-center">
                             <h3 class="text-lg font-semibold text-gray-100 capitalize">{{ $commonName }}</h3>
                             <p class="text-md text-gray-400 italic normal-case">{{ $scientificName }}</p>
                         </div>
